@@ -67,37 +67,39 @@ const App: React.FC = () => {
             </div>
 
             {/* Scrollable Main Content */}
-            <div className="flex-1 overflow-y-auto p-8 bg-gray-100 dark:bg-gray-900">
-                {selectedInvoice ? (
-                    <InvoiceDetail
-                        invoice={selectedInvoice}
-                        onEdit={() => {
-                            setCurrentInvoice(selectedInvoice);
-                            setIsDialogOpen(true);
-                        }}
-                        onDelete={() => deleteInvoice(selectedInvoice.id)}
-                        onMarkAsPaid={() => markAsPaid(selectedInvoice.id)}
-                        onBack={() => setSelectedInvoice(null)}
-                    />
-                ) : (
-                    <>
-                        <Header
-                            invoiceCount={filteredInvoices.length}
-                            onFilterChange={setFilter}
-                            onAddInvoice={() => {
-                                setCurrentInvoice(null);
+            <div className="flex-1 overflow-y-auto p-8 bg-gray-100 dark:bg-gray-900 items-center">
+                <div className="mx-auto xl:max-w-4xl w-full">
+                    {selectedInvoice ? (
+                        <InvoiceDetail
+                            invoice={selectedInvoice}
+                            onEdit={() => {
+                                setCurrentInvoice(selectedInvoice);
                                 setIsDialogOpen(true);
                             }}
+                            onDelete={() => deleteInvoice(selectedInvoice.id)}
+                            onMarkAsPaid={() => markAsPaid(selectedInvoice.id)}
+                            onBack={() => setSelectedInvoice(null)}
                         />
-                        <InvoiceList
-                            invoices={filteredInvoices}
-                            onItemClick={(invoice) => setSelectedInvoice(invoice)}
-                        />
-                    </>
-                )}
-                <Dialog isOpen={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-                    <InvoiceForm invoice={currentInvoice} onSubmit={saveInvoice} />
-                </Dialog>
+                    ) : (
+                        <>
+                            <Header
+                                invoiceCount={filteredInvoices.length}
+                                onFilterChange={setFilter}
+                                onAddInvoice={() => {
+                                    setCurrentInvoice(null);
+                                    setIsDialogOpen(true);
+                                }}
+                            />
+                            <InvoiceList
+                                invoices={filteredInvoices}
+                                onItemClick={(invoice) => setSelectedInvoice(invoice)}
+                            />
+                        </>
+                    )}
+                    <Dialog isOpen={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
+                        <InvoiceForm invoice={currentInvoice} onSubmit={saveInvoice} />
+                    </Dialog>
+                </div>
             </div>
         </div>
     );
